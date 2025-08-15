@@ -1,6 +1,6 @@
 # PayWatch - Payment Gateway Support & Monitoring Dashboard
 
-A comprehensive, beginner-friendly dashboard for payment gateway support and monitoring. The project simulates the essential operations and responsibilities typically handled in product support engineering, including real-time transaction review, system health checking, customer ticket tracking, analytic reporting, API interaction, and troubleshooting. Built to act as an internal dashboard for technical support, product, and engineering teams in fintech or e-commerce contexts.
+A comprehensive, beginner-friendly dashboard for payment gateway support and monitoring. The project simulates the essential operations and responsibilities typically including real-time transaction review, system health checking, customer ticket tracking, analytic reporting, API interaction, and troubleshooting. 
 
 ***
 
@@ -39,8 +39,8 @@ A comprehensive, beginner-friendly dashboard for payment gateway support and mon
 
 1. Clone or download the repository.
    ```bash
-   git clone https://github.com/yourusername/paywatch-dashboard.git
-   cd paywatch-dashboard
+   git clone https://github.com/Jatingoyal14/PayWatch.git
+   cd PayWatch
    ```
 2. Open `index.html` in your browser.
    - **Alternatively:** Serve the directory via a local server and access via `http://localhost:8000` or similar.
