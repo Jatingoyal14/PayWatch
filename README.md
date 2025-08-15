@@ -141,16 +141,6 @@ The PayWatch dashboard follows a modern web application architecture:
    - Local server: `http://localhost:8000`
 
 
-### File Structure
-
-```
-paywatch-dashboard/
-├── index.html       # Main HTML file
-├── style.css        # Custom dashboard styling
-├── app.js           # Application logic and mock data
-└── README.md        # Project documentation
-```
-
 ***
 
 ## 📊 Data Models
