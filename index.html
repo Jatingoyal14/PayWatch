@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayWatch - Payment Gateway Support Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>PayWatch</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a></li>
+                    <li><a href="#live-monitor" class="nav-link" data-section="live-monitor">
+                        <i class="fas fa-eye"></i> Live Monitor
+                    </a></li>
+                    <li><a href="#system-health" class="nav-link" data-section="system-health">
+                        <i class="fas fa-heartbeat"></i> System Health
+                    </a></li>
+                    <li><a href="#troubleshooting" class="nav-link" data-section="troubleshooting">
+                        <i class="fas fa-wrench"></i> Troubleshooting
+                    </a></li>
+                    <li><a href="#analytics" class="nav-link" data-section="analytics">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </a></li>
+                    <li><a href="#support-tickets" class="nav-link" data-section="support-tickets">
+                        <i class="fas fa-ticket-alt"></i> Support Tickets
+                    </a></li>
+                    <li><a href="#api-console" class="nav-link" data-section="api-console">
+                        <i class="fas fa-code"></i> API Console
+                    </a></li>
+                    <li><a href="#knowledge-base" class="nav-link" data-section="knowledge-base">
+                        <i class="fas fa-book"></i> Knowledge Base
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1 id="page-title">Dashboard Overview</h1>
+                <div class="header-actions">
+                    <button class="btn btn--sm btn--outline" id="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <div class="status-indicator">
+                        <span class="status status--success">System Operational</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section active">
+                <div class="dashboard-grid">
+                    <div class="card metric-card">
+                        <div class="card__body">
+                            <div class="metric">
+                                <div class="metric-icon success">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="metric-content">
+                                    <h3>Transaction Volume</h3>
+                                    <div class="metric-value">15,420</div>
+                                    <div class="metric-change positive">+5.2%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card metric-card">
+                        <div class="card__body">
+                            <div class="metric">
+                                <div class="metric-icon warning">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="metric-content">
+                                    <h3>Response Time</h3>
+                                    <div class="metric-value">250ms</div>
+                                    <div class="metric-change negative">+12ms</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card metric-card">
+                        <div class="card__body">
+                            <div class="metric">
+                                <div class="metric-icon success">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                                <div class="metric-content">
+                                    <h3>Success Rate</h3>
+                                    <div class="metric-value">99.98%</div>
+                                    <div class="metric-change positive">+0.1%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card metric-card">
+                        <div class="card__body">
+                            <div class="metric">
+                                <div class="metric-icon error">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="metric-content">
+                                    <h3>Active Issues</h3>
+                                    <div class="metric-value">2</div>
+                                    <div class="metric-change neutral">No change</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Transaction Trends (24h)</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="transactionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Payment Methods Distribution</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="paymentMethodChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Live Monitor Section -->
+            <section id="live-monitor-section" class="content-section">
+                <div class="monitor-controls">
+                    <div class="filters">
+                        <select class="form-control" id="status-filter">
+                            <option value="">All Status</option>
+                            <option value="success">Success</option>
+                            <option value="failed">Failed</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                        <select class="form-control" id="method-filter">
+                            <option value="">All Methods</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Net Banking">Net Banking</option>
+                        </select>
+                        <input type="text" class="form-control" id="search-input" placeholder="Search transaction ID...">
+                    </div>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__body">
+                        <div class="transaction-list" id="transaction-list">
+                            <!-- Transactions will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Health Section -->
+            <section id="system-health-section" class="content-section">
+                <div class="health-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>API Services Status</h3>
+                            <div class="service-list" id="service-status">
+                                <!-- Services will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Performance Metrics</h3>
+                            <div class="performance-metrics">
+                                <div class="metric-item">
+                                    <span class="metric-label">Uptime</span>
+                                    <span class="metric-value">99.98%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Error Rate</span>
+                                    <span class="metric-value">0.02%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Avg Response</span>
+                                    <span class="metric-value">250ms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Response Time Trend</h3>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="responseTimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting Section -->
+            <section id="troubleshooting-section" class="content-section">
+                <div class="troubleshooting-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Diagnostic Wizard</h3>
+                            <div class="wizard-step">
+                                <p>What type of issue are you experiencing?</p>
+                                <div class="issue-types">
+                                    <button class="btn btn--outline issue-btn" data-issue="payment-failure">Payment Failure</button>
+                                    <button class="btn btn--outline issue-btn" data-issue="webhook-issues">Webhook Issues</button>
+                                    <button class="btn btn--outline issue-btn" data-issue="integration-problems">Integration Problems</button>
+                                </div>
+                            </div>
+                            <div class="wizard-content" id="wizard-content"></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Common Error Codes</h3>
+                            <div class="error-codes" id="error-codes-list">
+                                <!-- Error codes will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="content-section">
+                <div class="analytics-controls">
+                    <select class="form-control" id="analytics-period">
+                        <option value="24h">Last 24 Hours</option>
+                        <option value="7d">Last 7 Days</option>
+                        <option value="30d">Last 30 Days</option>
+                    </select>
+                    <button class="btn btn--primary" id="export-report">Export Report</button>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Transaction Volume Trend</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="volumeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Success Rate Analysis</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="successRateChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support Tickets Section -->
+            <section id="support-tickets-section" class="content-section">
+                <div class="tickets-header">
+                    <div class="ticket-filters">
+                        <select class="form-control" id="ticket-status-filter">
+                            <option value="">All Status</option>
+                            <option value="open">Open</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                        <select class="form-control" id="ticket-priority-filter">
+                            <option value="">All Priority</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="ticket-list" id="ticket-list">
+                    <!-- Tickets will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- API Console Section -->
+            <section id="api-console-section" class="content-section">
+                <div class="api-console">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>API Endpoint Testing</h3>
+                            <div class="api-form">
+                                <div class="form-group">
+                                    <label class="form-label">Endpoint</label>
+                                    <select class="form-control" id="api-endpoint">
+                                        <option value="">Select an endpoint</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Request Body (JSON)</label>
+                                    <textarea class="form-control" id="api-request-body" rows="6" placeholder='{"amount": 1000, "currency": "INR"}'></textarea>
+                                </div>
+                                <button class="btn btn--primary" id="test-api-btn">Test API</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>API Response</h3>
+                            <div class="api-response">
+                                <pre id="api-response-content">Select an endpoint and click "Test API" to see the response</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Knowledge Base Section -->
+            <section id="knowledge-base-section" class="content-section">
+                <div class="knowledge-search">
+                    <input type="text" class="form-control" id="kb-search" placeholder="Search documentation...">
+                </div>
+
+                <div class="knowledge-content">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Quick Start Guide</h3>
+                            <p>Learn how to integrate PayWatch APIs into your application with our comprehensive guides.</p>
+                            <ul>
+                                <li><a href="#" target="_blank">Payment Integration</a></li>
+                                <li><a href="#" target="_blank">Webhook Setup</a></li>
+                                <li><a href="#" target="_blank">Error Handling</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Common Issues & Solutions</h3>
+                            <div class="knowledge-items" id="knowledge-items">
+                                <!-- Knowledge items will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Best Practices</h3>
+                            <ul>
+                                <li>Always validate payment status before fulfilling orders</li>
+                                <li>Implement proper webhook verification</li>
+                                <li>Use appropriate timeouts for API calls</li>
+                                <li>Handle network failures gracefully</li>
+                                <li>Log all payment events for debugging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
